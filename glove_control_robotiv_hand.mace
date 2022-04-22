@@ -1,0 +1,55 @@
++Add System>IO>Port
++Add Core>HS>Arduino
++Add Math
++Lib ="Servo"
+:
+As Main <HDL , Object H>
+(
+def =>> Servo = pinKie,ring,middle,index_1,thumb (),
+ const int pinkieFlex,ringFlex,middleFlex,indexFlex,thumbFlex (is) =>
+ (
+ [A0] and[A1] and[A2] and[A3] and [A4] and
+ ),
+  return(Python),
+),
+As Setup <,>
+(
+  Servo (attach_upt)=>
+ (
+  13 and 12 and 11 and 9 and 10
+ ),
+ Servo(is write)=>
+ (
+  180 and 180 and 180 and 180 and 180
+ ),
+ serialport.start(9600),
+ ), 
+As Loop <,>
+(
+ finger_control()=>
+ (
+  [pinKie,pinkieFlexm,30,180,710,900] and [ring,ringFlex,0,180,935,965] and [middle,middleFlex,0,180,976,985] and
+  [index_1,indexFlex,30,180,850,920] and [thumb,thumbFlex,0,180,487,500]
+ ),
+ 
+), 
+Var finger_control from<= path:'Servo', use [int (flex,s_bent,s_flat,f_bent,f_flat)] =>
+(
+ int servo_pos,flex_pos(),
+ flex_pos(analogreader)=>(flex),
+ servo_pos (create.map)=>
+ (
+  flex_pos and f_bent and f_flat and s_bent and s_flat
+ ),
+ Servo.write()=>(flex), 
+ dela(100),
+),
+var testFlex from<=path:'Core',use=>
+(
+ int val0 (analogreader)=>(A0+serialport.print(input by ''+'40'+val0)),
+ int val1 (analogreader)=>(A1+serialport.print('A1'+val1)),
+ int val2 (analogreader)=>(A2+serialport.print('A2'+val2)),
+ int val3 (analogreader)=>(A3+serialport.print('A3'+val3)),
+ int val4 (analogreader)=>(A4+serialport.print('A4'+val4)),
+ dela(500),
+),
